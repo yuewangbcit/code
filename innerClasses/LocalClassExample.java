@@ -1,0 +1,96 @@
+package code.innerClasses;
+
+/**
+ * This is an example of a local class. Hold on to your hat. This is very cool.
+ *
+ * @author BCIT
+ * @version 2020
+ */
+public final class LocalClassExample {
+
+    /**
+     * Ooh! A regex!
+     */
+    public static String regularExpression = "[^0-9]";
+
+    private LocalClassExample() {
+    }
+
+    /**
+     * Validates a phone number.
+     *
+     * @param acceptablePattern a String
+     * @param phoneNumber       to be tested as a String
+     */
+    public static void validatePhoneNumber(final String acceptablePattern,
+                                           final String phoneNumber) {
+
+        final int numberLength = 10;
+
+        /*
+         * A local class!
+         */
+        class PhoneNumber {
+
+            String formattedPhoneNumber;
+
+            /**
+             * Constructs a PhoneNumber object
+             * @param phoneNumber a String
+             */
+            PhoneNumber(final String phoneNumber) {
+                // numberLength = 7; // What happens if we uncomment this? Why does that happen?
+
+                String currentNumber = phoneNumber.replaceAll(regularExpression, "");
+                if (currentNumber.length() == numberLength) {
+                    formattedPhoneNumber = currentNumber;
+                } else {
+                    formattedPhoneNumber = null;
+                }
+            }
+
+            /**
+             * Returns the formatted number as a String.
+             * @return phoneNumber formatted as a String
+             */
+            public String getNumber() {
+                return formattedPhoneNumber;
+            }
+
+            /**
+             * Prints the original numbers
+             */
+            public void printOriginalNumbers() {
+                System.out.println("Original numbers are "
+                        + acceptablePattern + " and " + phoneNumber);
+
+            }
+        }
+
+        PhoneNumber myNumber1 = new PhoneNumber(acceptablePattern);
+        PhoneNumber myNumber2 = new PhoneNumber(phoneNumber);
+
+        myNumber1.printOriginalNumbers();
+
+        if (myNumber1.getNumber() == null) {
+            System.out.println("First number is invalid");
+        } else {
+            System.out.println("First number is " + myNumber1.getNumber());
+        }
+
+        if (myNumber2.getNumber() == null) {
+            System.out.println("Second number is invalid");
+        } else {
+            System.out.println("Second number is " + myNumber2.getNumber());
+        }
+    }
+
+    /**
+     * Drives the program.
+     * @param args unused.
+     */
+    public static void main(final String... args) {
+        validatePhoneNumber("123-456-7890", "123-222-7890");
+    }
+}
+
